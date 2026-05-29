@@ -1,11 +1,11 @@
 ---
 name: code-review
-description: Review AI-generated code changes, shell commands, tool calls, file operations, test results, and implementation decisions, then generate a standalone HTML report from a static template. Use when the user asks to audit, review, summarize, inspect, document, or deliver a report about what an AI coding agent changed, executed, verified, failed to verify, or is uncertain about.
+description: Review code changes, shell commands, tool calls, file operations, test results, and implementation decisions produced by any AI IDE or coding assistant, then generate a standalone HTML report from a static template. Use when the user asks to audit, review, summarize, inspect, document, or deliver a report about what an AI coding tool changed, executed, verified, failed to verify, or is uncertain about.
 ---
 
 # code-review
 
-Create a compact standalone HTML review report from `assets/report-template.html`.
+Create a compact standalone HTML review report from `assets/report-template.html`. The workflow is AI IDE agnostic: it can be used by Codex, Cursor, Windsurf, Trae, Cline, Claude Code, or any assistant that can inspect files and write HTML.
 
 ## Workflow
 
