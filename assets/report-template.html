@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="{{HTML_LANG}}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{TITLE}}</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #ffffff;
+      --ink: #1e293b;
+      --muted: #64748b;
+      --line: #e2e8f0;
+
+      /* 各模块专属色彩定义 (文字色 / 背景色 / 边框高亮色) */
+      --c-overview-text: #0369a1;  --c-overview-bg: #f0f9ff;  --c-overview-border: #0ea5e9;
+      --c-code-text: #6d28d9;      --c-code-bg: #f5f3ff;      --c-code-border: #8b5cf6;
+      --c-cmd-text: #0e7490;       --c-cmd-bg: #ecfeff;       --c-cmd-border: #06b6d4;
+      --c-verify-text: #15803d;    --c-verify-bg: #f0fdf4;    --c-verify-border: #10b981;
+      --c-risk-text: #b91c1c;      --c-risk-bg: #fef2f2;      --c-risk-border: #ef4444;
+      --c-uncert-text: #b45309;    --c-uncert-bg: #fffbeb;    --c-uncert-border: #f59e0b;
+      --c-steps-text: #475569;     --c-steps-bg: #f8fafc;     --c-steps-border: #64748b;
+
+      /* 独立高亮标签 */
+      --risk-high: #df1c1c;       --risk-high-bg: #fde8e8;
+      --risk-medium: #d97706;     --risk-medium-bg: #fef3c7;
+      --risk-low: #16a34a;        --risk-low-bg: #dcfce7;
+
+      /* 代码块 */
+      --code-bg: #0b0f19;
+      --code-ink: #f1f5f9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      /* 关键优化：确保文本呼吸感与极佳的手机/电脑屏幕阅读体验 */
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    main {
+      width: min(880px, calc(100% - 40px));
+      margin: 50px auto 80px;
+    }
+
+    /* 头部排版 */
+    header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid var(--line);
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.3;
+      color: #0f172a;
+    }
+
+    .summary-text {
+      font-size: 18px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin: 0 0 18px;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--muted);
+      padding: 4px 12px;
+      background: #f1f5f9;
+      border-radius: 6px;
+    }
+
+    /* 通用 Section 结构：移除生硬边框，通过色彩和侧边加粗线条区分模块 */
+    section {
+      margin-top: 24px;
+      padding: 32px;
+      border-radius: 0 12px 12px 0;
+    }
+
+    h2 {
+      margin: 0 0 16px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 0 0 16px;
+    }
+    p:last-child {
+      margin-bottom: 0;
+    }
+
+    ul, ol {
+      margin: 0 0 16px;
+      padding-left: 24px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+
+    /* --- 模块独特色彩动态绑定 --- */
+    .sec-overview { background: var(--c-overview-bg); border-left: 5px solid var(--c-overview-border); }
+    .sec-overview h2 { color: var(--c-overview-text); }
+
+    .sec-code { background: var(--c-code-bg); border-left: 5px solid var(--c-code-border); }
+    .sec-code h2 { color: var(--c-code-text); }
+
+    .sec-cmd { background: var(--c-cmd-bg); border-left: 5px solid var(--c-cmd-border); }
+    .sec-cmd h2 { color: var(--c-cmd-text); }
+
+    .sec-verify { background: var(--c-verify-bg); border-left: 5px solid var(--c-verify-border); }
+    .sec-verify h2 { color: var(--c-verify-text); }
+
+    .sec-risk { background: var(--c-risk-bg); border-left: 5px solid var(--c-risk-border); }
+    .sec-risk h2 { color: var(--c-risk-text); }
+
+    .sec-uncert { background: var(--c-uncert-bg); border-left: 5px solid var(--c-uncert-border); }
+    .sec-uncert h2 { color: var(--c-uncert-text); }
+
+    .sec-steps { background: var(--c-steps-bg); border-left: 5px solid var(--c-steps-border); }
+    .sec-steps h2 { color: var(--c-steps-text); }
+
+    /* 内部组件（如列表项、网格等可选扩展样式） */
+    .grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .item {
+      padding: 20px;
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+    }
+    .label {
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* 独立的风险/严重性徽章高亮 */
+    .severity {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 8px;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .severity.high { background: var(--risk-high-bg); color: var(--risk-high); }
+    .severity.medium { background: var(--risk-medium-bg); color: var(--risk-medium); }
+    .severity.low { background: var(--risk-low-bg); color: var(--risk-low); }
+
+    /* 行内代码：加粗，带透明暗色底，方便在文字里一眼扫到 */
+    code {
+      padding: 3px 6px;
+      border-radius: 4px;
+      background: rgba(15, 23, 42, 0.06);
+      color: #0f172a;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+
+    /* 代码块：全屏暗色高对比度（GitHub Dark 风格） */
+    pre {
+      margin: 16px 0 0;
+      padding: 20px;
+      overflow-x: auto;
+      border-radius: 10px;
+      background: var(--code-bg);
+      color: var(--code-ink);
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+      font-weight: 400;
+    }
+
+    footer {
+      margin-top: 60px;
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    @media (max-width: 640px) {
+      main { width: calc(100% - 24px); margin-top: 24px; }
+      header { margin-bottom: 24px; }
+      section { padding: 20px; }
+      h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>{{TITLE}}</h1>
+      <p class="summary-text">{{SUMMARY}}</p>
+      <div class="meta">
+        <span class="pill">{{L_GENERATED}}: {{GENERATED_AT}}</span>
+        <span class="pill">{{L_WORKSPACE}}: {{WORKSPACE}}</span>
+      </div>
+    </header>
+
+    <section class="sec-overview">
+      <h2>{{L_OVERVIEW}}</h2>
+      {{OVERVIEW}}
+    </section>
+
+    <section class="sec-code">
+      <h2>{{L_CODE_CHANGES}}</h2>
+      {{CODE_CHANGES}}
+    </section>
+
+    <section class="sec-cmd">
+      <h2>{{L_COMMANDS_ACTIONS}}</h2>
+      {{COMMANDS_ACTIONS}}
+    </section>
+
+    <section class="sec-verify">
+      <h2>{{L_VERIFICATION}}</h2>
+      {{VERIFICATION}}
+    </section>
+
+    <section class="sec-risk">
+      <h2>{{L_RISKS}}</h2>
+      {{RISKS}}
+    </section>
+
+    <section class="sec-uncert">
+      <h2>{{L_UNCERTAINTIES}}</h2>
+      {{UNCERTAINTIES}}
+    </section>
+
+    <section class="sec-steps">
+      <h2>{{L_NEXT_STEPS}}</h2>
+      {{NEXT_STEPS}}
+    </section>
+
+    <footer>{{L_FOOTER}}</footer>
+  </main>
+</body>
+</html>
+

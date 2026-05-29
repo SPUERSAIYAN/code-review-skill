@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Render HTML reports for AI code reviews."
+  default_prompt: "Create a compact HTML review with key changed code snippets, commands, checks, risks, and unknowns."
