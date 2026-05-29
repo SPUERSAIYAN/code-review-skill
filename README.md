@@ -4,19 +4,22 @@
 
 用于让 AI 总结自己生成的代码、命令、验证结果、风险和不确定项，并输出一个独立 HTML 报告。报告必须包含关键改动代码片段，不能只列文件名。
 
-## 下载
+## 安装
+
+打开你正在使用的 Agent，例如 Claude Code、Codex、Cursor、OpenClaw、Hermes、CodeBuddy、WorkBuddy、Gemini CLI、OpenCode 等，然后告诉它：
+
+> 帮我安装这个 skill：https://github.com/SPUERSAIYAN/code-review-skill
+
+或者使用通用 CLI 安装器 `vercel-labs/skills`：
 
 ```bash
-npx degit SPUERSAIYAN/code-review-skill code-review
-```
-
-```bash
-git clone https://github.com/SPUERSAIYAN/code-review-skill.git
+npx skills add SPUERSAIYAN/code-review-skill
 ```
 
 ## 使用
 
-把 `SKILL.md` 作为 AI 指令，把 `assets/report-template.html` 作为 HTML 模板。
+示例：
+
+> 使用 code-review skill，审查刚才 AI 生成的代码、执行过的命令和验证结果，生成一个 HTML Review 报告。报告里必须包含关键改动代码片段、风险、不确定项和下一步建议。
 
 适用于 Codex、Cursor、Windsurf、Trae、Cline、Claude Code 等 AI 编程工具。
-
