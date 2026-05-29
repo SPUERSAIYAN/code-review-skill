@@ -1,7 +1,22 @@
-# code-review
+<h1 align="center">code-review</h1>
 
-AI IDE agnostic code-review skill for reviewing AI-generated code, commands, verification evidence, risks, and uncertainties, then producing a compact standalone HTML report from a static template.
+面向所有 AI IDE 的轻量代码 Review Skill。
 
-Use it in Codex, Cursor, Windsurf, Trae, Cline, Claude Code, or any AI coding assistant by giving the assistant `SKILL.md` as the instruction and `assets/report-template.html` as the output template.
+用于让 AI 总结自己生成的代码、命令、验证结果、风险和不确定项，并输出一个独立 HTML 报告。报告必须包含关键改动代码片段，不能只列文件名。
 
-Core requirement: the HTML report must include key changed code snippets, not only changed filenames.
+## 下载
+
+```bash
+npx degit SPUERSAIYAN/code-review-skill code-review
+```
+
+```bash
+git clone https://github.com/SPUERSAIYAN/code-review-skill.git
+```
+
+## 使用
+
+把 `SKILL.md` 作为 AI 指令，把 `assets/report-template.html` 作为 HTML 模板。
+
+适用于 Codex、Cursor、Windsurf、Trae、Cline、Claude Code 等 AI 编程工具。
+
